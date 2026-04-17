@@ -30,7 +30,8 @@ body{
         background-color: white;
 }
 #DashNav{
-background-color: #2b2f36;
+    
+    background-color: #2b2f36;
     padding: 12px 25px;
     border-radius: 15px;
     text-decoration: none;
