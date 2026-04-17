@@ -60,10 +60,10 @@ background-color: #2b2f36;
 }
 .menuNav img{
     position: relative;
-    top: -10px;
-    right: 20px;
+    top: 1px;
+    right: 32px;
     height: 60px;
-    width: 80px;
+    width: 50px;
 }
 .menuNav h1{
     position: relative;
