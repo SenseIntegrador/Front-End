@@ -108,6 +108,9 @@ background-color: #2b2f36;
     padding: 15px;
 }
 .BoxTempera{
+        box-shadow: 
+        0 3px 6px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.05);
     background-color: #272B2E;
     border-radius: 20px;
     width: 440px;
@@ -118,6 +121,9 @@ background-color: #2b2f36;
     font-size: 28px;
 }
 .BoxUmida{
+        box-shadow: 
+        0 3px 6px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.05);
     background-color: #272B2E;
     border-radius: 20px;
     width: 440px;
