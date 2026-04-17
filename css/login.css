@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+a {
+    color: #7636C0;
+    text-decoration: none;
+}
+
+img {
+    z-index: +1;
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    top: -5%;
+}
+
+#bola{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: -15%;
+    top: -50%;
+    
+    border-radius: 100%;
+    background: linear-gradient(177.97deg, #290A45 1.71%, #250A34 65.33%, #000000 90.51%);
+}
+
+#boxLogin {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: black;
+    color: aliceblue;
+}
+
+#lblLogin{
+    z-index: +1;
+    margin-left: -125px;
+}
+
+#lblCadastro{
+    z-index: +1;
+}
+
+#txtUser {
+    z-index: +1;
+    border-radius: 25px;
+    height: 25px;
+    width: 215px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: #000000;
+    color: aliceblue;
+}
+
+#txtSenha {
+    z-index: +1;
+    border-radius: 25px;
+    height: 25px;
+    width: 215px;
+    margin-bottom: 25px;
+    background-color: #000000;
+    color: aliceblue;
+}
+
+#btnEntrar {
+    z-index: +1;
+    text-align: left;
+    color: aliceblue;
+    background: #7636C0;
+    height: 35px;
+    width: 100px;
+    margin-left: 125px;
+}
