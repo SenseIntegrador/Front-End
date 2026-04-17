@@ -1,0 +1,129 @@
+
+
+*{
+  font-family: "Montserrat", sans-serif;
+    color: white;
+    font-weight: bold;
+}
+body{
+    background-color: #202427;
+}
+.menuNav{
+    padding: 10px 40px;
+    background-color: #272B2E;
+    margin: -10px -10px 20px -10px;
+}
+.menuNav a{
+    text-decoration: none;
+}
+.posslkink{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -130px;
+    padding-bottom: 5px;
+    gap: 50px;
+}
+#DashNav:hover{
+        transform: translateY(-6px);
+        color: #202427;
+        background-color: white;
+}
+#DashNav{
+background-color: #2b2f36;
+    padding: 12px 25px;
+    border-radius: 15px;
+    text-decoration: none;
+    box-shadow: 
+        0 3px 6px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+
+    transition: 0.2s;
+}
+#HistoNav:hover{
+    transform: translateY(-6px);
+    color: #202427;
+    background-color: white;
+}
+
+
+#HistoNav{
+background-color: #2b2f36;
+    padding: 12px 25px; /* 👈 ISSO define o tamanho */
+    border-radius: 15px;
+    text-decoration: none;
+    box-shadow: 
+        0 3px 6px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+
+    transition: 0.2s;
+}
+.menuNav img{
+    position: relative;
+    top: -10px;
+    right: 20px;
+    height: 60px;
+    width: 80px;
+}
+.menuNav h1{
+    position: relative;
+    top: -70px;
+    left: 20px;
+}
+.boxGraf{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 100px;
+}
+.box_fil {
+    background-image: url("../img/IconFilter.png");     
+    outline: none;
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #272B2E;
+    color: white;
+    height: 45px;
+    width: 110px;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.4), 
+    inset 0 1px 0 rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding-left: 20px; 
+}
+.box_fil:hover{
+    transform: translateY(-2px);
+    color: white;
+    background-color: #202427;
+}
+.filtroTempe{
+    padding: 15px; 
+}
+.filtroUmida{
+    padding: 15px;
+}
+.BoxTempera{
+    background-color: #272B2E;
+    border-radius: 20px;
+    width: 440px;
+    height: 700px;
+}
+.BoxTempera h2{
+    text-align: center;
+    font-size: 28px;
+}
+.BoxUmida{
+    background-color: #272B2E;
+    border-radius: 20px;
+    width: 440px;
+    height: 700px;
+}
+.BoxUmida h2{
+    text-align: center;
+    font-size: 28px;
+}
