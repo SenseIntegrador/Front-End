@@ -227,6 +227,11 @@ background-color: #2b2f36;
   top: -50px;
   left: 30%;
 }
+#UmidaValor{
+  position: relative;
+  top: -50px;
+  left: 30%;
+}
 .card:hover{
     box-shadow: 
         0 3px 6px rgba(0,0,0,0.4),
