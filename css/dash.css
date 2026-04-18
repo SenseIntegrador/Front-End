@@ -217,7 +217,16 @@ background-color: #2b2f36;
   position: relative;
   box-shadow: inset 0 0 30px rgba(255,255,255,0.03);
 }
-
+#gaugeTemp{
+  position: relative;
+  top: -50px;
+  left: 30%;
+}
+#gaugeUmida{
+  position: relative;
+  top: -50px;
+  left: 30%;
+}
 .card:hover{
     box-shadow: 
         0 3px 6px rgba(0,0,0,0.4),
