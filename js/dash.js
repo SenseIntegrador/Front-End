@@ -4,7 +4,7 @@ const maxUmidade = 100;
 const max = 40;
 
 async function lerDados () {
-  const res = await fetch('http://10.110.12.50:1880/sensor');
+  const res = await fetch('http://10.110.12.16:1880/sensor');
   const dados = await res.json();
 
   console.log(dados);
