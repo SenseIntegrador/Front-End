@@ -1,4 +1,71 @@
 const INTERVALO_ATUALIZACAO_MS = 10000;
+setInterval(lerDados, 2000); // atualiza a cada 5 segundos
+let graficoLinha = null;
+
+const ctxUmidade = document.getElementById('gaugeUmida');
+const ctx = document.getElementById('gaugeTemp');
+const maxUmidade = 100;
+const max = 40;
+
+let graficoTemp = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [0, max],
+      backgroundColor: ['#fb923c', '#e5e7eb'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: false,
+          maintainAspectRatio: false,
+          circumference: 180,
+          rotation: -90,
+          cutout: '70%',
+          plugins: {
+              legend: { display: false },
+              annotation: {
+                  annotations: {
+                      label: {
+                          type: 'doughnutLabel',
+                          font: [{ size: 20 }],
+                          color: ['#fb923c']
+                      }
+                  }
+              }
+          }
+  }
+});
+
+let graficoUmidade = new Chart(ctxUmidade, {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [0, maxUmidade],
+      backgroundColor: ['#60a5fa', '#e5e7eb'],
+      borderWidth: 0
+    }]
+  },
+  options: { 
+    responsive: false,
+      maintainAspectRatio: false,
+      circumference: 180,
+      rotation: -90,
+      cutout: '70%',
+      plugins: {
+        legend: { display: false },
+        annotation: {
+          annotations: {
+            label: {
+              type: 'doughnutLabel',
+              font: [{ size: 20 }],
+              color: ['#60a5fa']
+            }
+          }
+        }
+      }
+   }
+});
 
 function formatarDataCurta(iso) {
     const d = new Date(iso);
@@ -17,8 +84,6 @@ function lerUmidade(ponto) {
     const n = Number(v);
     return Number.isFinite(n) ? n : null;
 }
-
-let graficoLinha = null;
 
 function destruirGraficoSeExistir() {
     if (graficoLinha) {
@@ -165,84 +230,34 @@ async function cicloAtualizacao() {
     }
 }
 
-cicloAtualizacao();
-setInterval(cicloAtualizacao, INTERVALO_ATUALIZACAO_MS);
-const ctxUmidade = document.getElementById('gaugeUmida');
-const ctx = document.getElementById('gaugeTemp');
-const maxUmidade = 100;
-const max = 40;
 
-async function lerDados () {
-  const res = await fetch('http://10.110.12.16:1880/sensor');
+ /* Separação */
+
+
+async function lerDados() {
+  const res = await fetch('http://10.110.12.16:1880/sensor_id');
   const dados = await res.json();
 
-  console.log(dados);
-
-  let valor = dados[0].temperatura; 
+  let valor = dados[0].temperatura;
   let valorUmidade = dados[0].umidade;
-  
-  new Chart(ctx, {
-  
-      type: 'doughnut',
-      data: {
-          datasets: [{
-              data: [valor, max - valor],
-              backgroundColor: ['#fb923c', '#e5e7eb'],
-              borderWidth: 0
-          }]
-      },
-      options: {
-          responsive: false,
-          maintainAspectRatio: false,
-          circumference: 180,
-          rotation: -90,
-          cutout: '70%',
-          plugins: {
-              legend: { display: false },
-              annotation: {
-                  annotations: {
-                      label: {
-                          type: 'doughnutLabel',
-                          content: [`${valor}°C`],
-                          font: [{ size: 20 }],
-                          color: ['#fb923c']
-                      }
-                  }
-              }
-          }
-      }
-      })
-  
-  new Chart(ctxUmidade, {
-    type: 'doughnut',
-    data: {
-      datasets: [{
-        data: [valorUmidade, maxUmidade - valorUmidade],
-        backgroundColor: ['#60a5fa', '#e5e7eb'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      circumference: 180,
-      rotation: -90,
-      cutout: '70%',
-      plugins: {
-        legend: { display: false },
-        annotation: {
-          annotations: {
-            label: {
-              type: 'doughnutLabel',
-              content: [`${valorUmidade}%`],
-              font: [{ size: 20 }],
-              color: ['#60a5fa']
-            }
-          }
-        }
-      }
-    }
-  });
-};
+
+  // Atualiza temperatura
+  graficoTemp.data.datasets[0].data = [valor, max - valor];
+  graficoTemp.options.plugins.annotation.annotations.label.content = [`${valor}°C`];
+  document.getElementById('lblTemp').textContent = [`${valor}°C`];
+  graficoTemp.update();
+
+  // Atualiza umidade
+  graficoUmidade.data.datasets[0].data = [valorUmidade, maxUmidade - valorUmidade];
+  graficoUmidade.options.plugins.annotation.annotations.label.content = [`${valorUmidade}%`];
+  document.getElementById('lblUmi').textContent = [`${valorUmidade}%`];
+  graficoUmidade.update();
+}
+
+
+ /* Separação */
+
 
 lerDados ();
+cicloAtualizacao();
+setInterval(cicloAtualizacao, INTERVALO_ATUALIZACAO_MS);
