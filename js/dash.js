@@ -1,3 +1,5 @@
+const INTERVALO_ATUALIZACAO_MS = 10000;
+
 function formatarDataCurta(iso) {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return String(iso);
@@ -16,33 +18,30 @@ function lerUmidade(ponto) {
     return Number.isFinite(n) ? n : null;
 }
 
-async function carregarGrafico() {
-    const resposta = await fetch('http://10.110.12.50:1880/sensor');
-    const dados = await resposta.json();
+let graficoLinha = null;
 
-    const labels = dados.map(d => d.data);
-    const temperatura = dados.map(d => d.temperatura);
-    const umidade = dados.map(d => lerUmidade(d));
-
-    const temUmidade = umidade.some((u) => u !== null);
-    const humiazul = document.getElementById('humiazul');
-    if (humiazul && temUmidade) {
-        const vals = umidade.filter((u) => u !== null);
-        const media = vals.reduce((a, b) => a + b, 0) / vals.length;
-        humiazul.textContent = `${Math.round(media)} %`;
+function destruirGraficoSeExistir() {
+    if (graficoLinha) {
+        graficoLinha.destroy();
+        graficoLinha = null;
     }
+}
 
-    const ctx = document.getElementById('grafLinha').getContext('2d');
+function criarOuAtualizarGrafico(labels, temperatura, umidade, temUmidade) {
+    const ctx = document.getElementById('grafLinha');
+    if (!ctx) return;
 
     const datasets = [{
         label: 'Temperatura',
         data: temperatura,
         yAxisID: 'y',
         borderColor: 'orange',
-        backgroundColor: 'rgba(255,165,0,0.15)',
-        tension: 0.4,
+        backgroundColor: 'rgba(255, 165, 0, 0.12)',
+        tension: 0.35,
+        fill: false,
+        spanGaps: true,
         pointRadius: 0,
-        pointHoverRadius: 4,
+        pointHoverRadius: 5,
         borderWidth: 2
     }];
 
@@ -52,10 +51,12 @@ async function carregarGrafico() {
             data: umidade,
             yAxisID: 'y1',
             borderColor: '#60a5fa',
-            backgroundColor: 'rgba(96,165,250,0.12)',
-            tension: 0.4,
+            backgroundColor: 'rgba(96, 165, 250, 0.12)',
+            tension: 0.35,
+            fill: false,
+            spanGaps: true,
             pointRadius: 0,
-            pointHoverRadius: 4,
+            pointHoverRadius: 5,
             borderWidth: 2
         });
     }
@@ -68,18 +69,19 @@ async function carregarGrafico() {
                 autoSkip: true,
                 maxTicksLimit: 10,
                 autoSkipPadding: 16,
+                color: '#94a3b8',
                 callback(value) {
                     const raw = this.getLabelForValue(value);
                     return formatarDataCurta(raw);
                 }
             },
-            grid: { color: 'rgba(255,255,255,0.06)' }
+            grid: { color: 'rgba(255, 255, 255, 0.06)' }
         },
         y: {
             id: 'y',
             position: 'left',
             ticks: { color: '#fb923c' },
-            grid: { color: 'rgba(255,255,255,0.06)' },
+            grid: { color: 'rgba(255, 255, 255, 0.06)' },
             title: {
                 display: true,
                 text: '°C',
@@ -102,21 +104,66 @@ async function carregarGrafico() {
         };
     }
 
-    new Chart(ctx, {
-        type: 'line',
-        data: { labels, datasets },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: 'index', intersect: false },
-            scales,
-            plugins: {
-                legend: {
-                    labels: { color: '#cbd5e1' }
-                }
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        scales,
+        plugins: {
+            legend: {
+                labels: { color: '#cbd5e1' }
             }
         }
-    });
+    };
+
+    const precisaRecriar =
+        !graficoLinha ||
+        graficoLinha.data.datasets.length !== datasets.length;
+
+    if (precisaRecriar) {
+        destruirGraficoSeExistir();
+        graficoLinha = new Chart(ctx.getContext('2d'), {
+            type: 'line',
+            data: { labels, datasets },
+            options
+        });
+        return;
+    }
+
+    graficoLinha.data.labels = labels;
+    graficoLinha.data.datasets[0].data = temperatura;
+    if (temUmidade && graficoLinha.data.datasets[1]) {
+        graficoLinha.data.datasets[1].data = umidade;
+    }
+    graficoLinha.update('none');
 }
 
-carregarGrafico();
+async function carregarGrafico() {
+    const resposta = await fetch('http://10.110.12.16:1880/sensor');
+    const dados = await resposta.json();
+
+    const labels = dados.map((d) => d.data);
+    const temperatura = dados.map((d) => d.temperatura);
+    const umidade = dados.map((d) => lerUmidade(d));
+
+    const temUmidade = umidade.some((u) => u !== null);
+    const humiazul = document.getElementById('humiazul');
+    if (humiazul && temUmidade) {
+        const vals = umidade.filter((u) => u !== null);
+        const media = vals.reduce((a, b) => a + b, 0) / vals.length;
+        humiazul.textContent = `${Math.round(media)} %`;
+    }
+
+    criarOuAtualizarGrafico(labels, temperatura, umidade, temUmidade);
+}
+
+async function cicloAtualizacao() {
+    try {
+        await carregarGrafico();
+    } catch (e) {
+        console.error('Falha ao atualizar gráfico:', e);
+    }
+}
+
+cicloAtualizacao();
+setInterval(cicloAtualizacao, INTERVALO_ATUALIZACAO_MS);
