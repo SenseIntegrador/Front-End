@@ -210,3 +210,6 @@ function filtroUmidade(valor) {
     umiMin();
   }
 }
+
+tempRecentes();
+umiRecentes();
