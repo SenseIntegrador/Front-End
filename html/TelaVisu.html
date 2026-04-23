@@ -26,7 +26,7 @@
     <header class="boxGraf">
     <Section class="BoxTempera">
         <div class="filtroTempe">
-        <select class="box_fil">
+        <select class="box_fil" onchange="filtroTemperatura(this.value)">
             <option disabled selected hidden>FILTRAR</option>
             <option value="recentes">Recentes</option>
             <option value="antigas">Antigas</option>
@@ -43,7 +43,7 @@
     </Section>
        <Section class="BoxUmida">
         <div class="filtroUmida">        
-        <select class="box_fil">
+        <select class="box_fil" onchange="filtroUmidade(this.value)">
             <option disabled selected hidden>FILTRAR</option>
             <option value="recentes">Recentes</option>
             <option value="antigas">Antigas</option>

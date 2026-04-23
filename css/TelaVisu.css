@@ -8,6 +8,51 @@
 body{
     background-color: #202427;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  max-height: 520px; /* ajusta conforme o tamanho do seu card */
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+li {
+  list-style: none;
+  margin: 6px 0;
+  padding: 8px 12px;
+  
+  font-size: 20px;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  color: #e5e7eb;
+
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  
+  transition: all 0.2s ease;
+}
+
+/* bolinha estilo indicador */
+li::before {
+  content: "•";
+  color: #9ca3af;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* hover suave */
+li:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .menuNav{
     padding: 10px 40px;
     background-color: #272B2E;
