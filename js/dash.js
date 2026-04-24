@@ -1,4 +1,4 @@
-const INTERVALO_ATUALIZACAO_MS = 10000;
+const INTERVALO_ATUALIZACAO_MS = 2000;
 setInterval(lerDados, 2000); // atualiza a cada 5 segundos
 let graficoLinha = null;
 
