@@ -6,6 +6,7 @@ const ctxUmidade = document.getElementById('gaugeUmida');
 const ctx = document.getElementById('gaugeTemp');
 const maxUmidade = 100;
 const max = 40;
+const url = 'http://10.110.12.36:1880/';
 
 let graficoTemp = new Chart(ctx, {
   type: 'doughnut',
@@ -204,7 +205,7 @@ function criarOuAtualizarGrafico(labels, temperatura, umidade, temUmidade) {
 }
 
 async function carregarGrafico() {
-    const resposta = await fetch('http://10.110.12.16:1880/sensor');
+    const resposta = await fetch(url + 'sensor');
     const dados = await resposta.json();
 
     const labels = dados.map((d) => d.data);
@@ -235,7 +236,7 @@ async function cicloAtualizacao() {
 
 
 async function lerDados() {
-  const res = await fetch('http://10.110.12.16:1880/sensor_id');
+  const res = await fetch(url + 'sensor_id');
   const dados = await res.json();
 
   let valor = dados[0].temperatura;
