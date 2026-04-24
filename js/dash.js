@@ -1,5 +1,5 @@
 const INTERVALO_ATUALIZACAO_MS = 10000;
-setInterval(lerDados, 2000); // atualiza a cada 5 segundos
+setInterval(lerDados, 2000); // atualiza a cada 2 segundos
 let graficoLinha = null;
 
 const ctxUmidade = document.getElementById('gaugeUmida');
