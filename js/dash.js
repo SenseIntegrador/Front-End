@@ -232,7 +232,7 @@ async function cicloAtualizacao() {
 }
 
 
- /* Separação */
+ /* Separação Grafico Lua*/
 
 
 async function lerDados() {
@@ -256,7 +256,7 @@ async function lerDados() {
 }
 
 
- /* Separação */
+ /* Separação Intervalo de atualizacao*/
 
 
 lerDados ();
