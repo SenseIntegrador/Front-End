@@ -1,11 +1,11 @@
-const INTERVALO_ATUALIZACAO_MS = 10000;
+const INTERVALO_ATUALIZACAO_MS = 2000;
 setInterval(lerDados, 2000); // atualiza a cada 2 segundos
 let graficoLinha = null;
 
 const ctxUmidade = document.getElementById('gaugeUmida');
 const ctx = document.getElementById('gaugeTemp');
 const maxUmidade = 100;
-const max = 40;
+const max = 100;
 const url = 'http://10.110.12.36:1880/';
 
 let graficoTemp = new Chart(ctx, {
